@@ -70,11 +70,28 @@ async def generate(
             template_name = await upload_image(client, template_bytes, template.image_file)
             logger.info(f"Template image uploaded as: {template_name}")
 
-            # 3. Inject the 3 dynamic values into the workflow
-            #    Node 2 = selfie | Node 6 = pose reference | Node 9 = positive prompt
-            workflow["2"]["inputs"]["image"] = selfie_name
-            workflow["6"]["inputs"]["image"] = template_name
-            workflow["9"]["inputs"]["text"] = template.prompt
+            # 3. Inject the 3 dynamic values into the workflow.
+            #    Support the original workflow IDs, plus the new model_2.json workflow.
+            if "2" in workflow and "6" in workflow and "9" in workflow:
+                selfie_node = "2"
+                template_node = "6"
+                prompt_node = "9"
+            elif "13" in workflow and "67" in workflow and "39" in workflow:
+                selfie_node = "13"
+                template_node = "67"
+                prompt_node = "39"
+            else:
+                raise HTTPException(
+                    status_code=500,
+                    detail=(
+                        "Unsupported workflow structure. "
+                        "Expected nodes 2/6/9 or 13/67/39 in workflow_api.json."
+                    ),
+                )
+
+            workflow[selfie_node]["inputs"]["image"] = selfie_name
+            workflow[template_node]["inputs"]["image"] = template_name
+            workflow[prompt_node]["inputs"]["text"] = template.prompt
 
             # 4. Queue the workflow
             logger.info(f"Queueing workflow for template='{template_id}'...")

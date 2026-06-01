@@ -1,188 +1,26 @@
 {
-  "1": {
-    "inputs": {
-      "ckpt_name": "juggernautXL.safetensors"
-    },
-    "class_type": "CheckpointLoaderSimple",
-    "_meta": {
-      "title": "Load Checkpoint"
-    }
-  },
-  "2": {
-    "inputs": {
-      "image": "test1.png"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
   "3": {
     "inputs": {
-      "instantid_file": "ip-adapter.bin"
-    },
-    "class_type": "InstantIDModelLoader",
-    "_meta": {
-      "title": "Load InstantID Model"
-    }
-  },
-  "4": {
-    "inputs": {
-      "provider": "CUDA"
-    },
-    "class_type": "InstantIDFaceAnalysis",
-    "_meta": {
-      "title": "InstantID Face Analysis"
-    }
-  },
-  "5": {
-    "inputs": {
-      "control_net_name": "diffusion_pytorch_model.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "6": {
-    "inputs": {
-      "image": "test_standing.png"
-    },
-    "class_type": "LoadImage",
-    "_meta": {
-      "title": "Load Image"
-    }
-  },
-  "7": {
-    "inputs": {
-      "detect_hand": "enable",
-      "detect_body": "enable",
-      "detect_face": "enable",
-      "resolution": 1024,
-      "bbox_detector": "yolox_l.onnx",
-      "pose_estimator": "dw-ll_ucoco_384_bs5.torchscript.pt",
-      "scale_stick_for_xinsr_cn": "disable",
-      "image": [
-        "6",
-        0
-      ]
-    },
-    "class_type": "DWPreprocessor",
-    "_meta": {
-      "title": "DWPose Estimator"
-    }
-  },
-  "8": {
-    "inputs": {
-      "control_net_name": "OpenPoseXL2.safetensors"
-    },
-    "class_type": "ControlNetLoader",
-    "_meta": {
-      "title": "Load ControlNet Model"
-    }
-  },
-  "9": {
-    "inputs": {
-      "text": "ultra realistic Indian football player,\nstanding confidently on football turf,\nfront-facing body,\nfull football kit,\nprofessional football jersey,\nathletic physique,\ncinematic stadium floodlights,\ndramatic sports photography,\nsharp facial features,\nrealistic Indian skin tone,\nhighly detailed eyes,\nnatural beard texture,\nphotorealistic,\ncentered composition,\nfull body visible,\nepic stadium atmosphere,\npremium sports poster style,\ndepth of field,\nsharp focus,\nrealistic fabric details,\nrealistic proportions,\n8k ultra detailed,\nsymmetrical composition,\ntemplatable pose,\nidentity preserving composition",
-      "clip": [
-        "1",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "10": {
-    "inputs": {
-      "text": "cartoon, anime, cgi, deformed anatomy, extra limbs, bad hands, plastic skin, low quality, blurry, watermark, text, unrealistic proportions,sleevless",
-      "clip": [
-        "1",
-        1
-      ]
-    },
-    "class_type": "CLIPTextEncode",
-    "_meta": {
-      "title": "CLIP Text Encode (Prompt)"
-    }
-  },
-  "11": {
-    "inputs": {
-      "weight": 0.8,
-      "start_at": 0,
-      "end_at": 1,
-      "instantid": [
-        "3",
-        0
-      ],
-      "insightface": [
-        "4",
-        0
-      ],
-      "control_net": [
-        "5",
-        0
-      ],
-      "image": [
-        "2",
-        0
-      ],
-      "model": [
-        "1",
-        0
-      ],
-      "positive": [
-        "9",
-        0
-      ],
-      "negative": [
-        "10",
-        0
-      ],
-      "image_kps": [
-        "7",
-        0
-      ]
-    },
-    "class_type": "ApplyInstantID",
-    "_meta": {
-      "title": "Apply InstantID"
-    }
-  },
-  "13": {
-    "inputs": {
-      "width": 1024,
-      "height": 1024,
-      "batch_size": 1
-    },
-    "class_type": "EmptyLatentImage",
-    "_meta": {
-      "title": "Empty Latent Image"
-    }
-  },
-  "14": {
-    "inputs": {
-      "seed": 990959678693683,
-      "steps": 25,
+      "seed": 1631591431,
+      "steps": 30,
       "cfg": 4.5,
-      "sampler_name": "dpmpp_2m",
+      "sampler_name": "ddpm",
       "scheduler": "karras",
       "denoise": 1,
       "model": [
-        "11",
+        "60",
         0
       ],
       "positive": [
-        "17",
-        0
-      ],
-      "negative": [
-        "17",
+        "60",
         1
       ],
+      "negative": [
+        "60",
+        2
+      ],
       "latent_image": [
-        "13",
+        "5",
         0
       ]
     },
@@ -191,14 +29,34 @@
       "title": "KSampler"
     }
   },
-  "15": {
+  "4": {
+    "inputs": {
+      "ckpt_name": "juggernautXL.safetensors"
+    },
+    "class_type": "CheckpointLoaderSimple",
+    "_meta": {
+      "title": "Load Checkpoint"
+    }
+  },
+  "5": {
+    "inputs": {
+      "width": 1016,
+      "height": 1016,
+      "batch_size": 1
+    },
+    "class_type": "EmptyLatentImage",
+    "_meta": {
+      "title": "Empty Latent Image"
+    }
+  },
+  "8": {
     "inputs": {
       "samples": [
-        "14",
+        "3",
         0
       ],
       "vae": [
-        "1",
+        "4",
         2
       ]
     },
@@ -207,10 +65,28 @@
       "title": "VAE Decode"
     }
   },
-  "16": {
+  "11": {
+    "inputs": {
+      "instantid_file": "ip-adapter.bin"
+    },
+    "class_type": "InstantIDModelLoader",
+    "_meta": {
+      "title": "Load InstantID Model"
+    }
+  },
+  "13": {
+    "inputs": {
+      "image": "test1.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
+    }
+  },
+  "15": {
     "inputs": {
       "images": [
-        "15",
+        "8",
         0
       ]
     },
@@ -219,31 +95,100 @@
       "title": "Preview Image"
     }
   },
-  "17": {
+  "16": {
     "inputs": {
-      "strength": 0.8,
-      "start_percent": 0,
-      "end_percent": 1,
-      "positive": [
-        "11",
+      "control_net_name": "diffusion_pytorch_model.safetensors"
+    },
+    "class_type": "ControlNetLoader",
+    "_meta": {
+      "title": "Load ControlNet Model"
+    }
+  },
+  "38": {
+    "inputs": {
+      "provider": "CPU"
+    },
+    "class_type": "InstantIDFaceAnalysis",
+    "_meta": {
+      "title": "InstantID Face Analysis"
+    }
+  },
+  "39": {
+    "inputs": {
+      "text": "ultra realistic football goalkeeper standing in the center of the goalpost,\npenalty save stance,\nlegs apart,\nhands ready,\nfocused expression,\ngoalkeeper gloves,\nprofessional goalkeeper uniform,\nfront-facing body,\nfull body visible,\ndramatic stadium floodlights,\nnight football stadium,\ncinematic sports photography,\nhighly detailed,\nphotorealistic,\nsharp focus,\nsports poster composition,\ncentered framing,\nrealistic skin texture,\nhigh contrast lighting,\nepic atmosphere,\n8k ultra detailed",
+      "clip": [
+        "4",
         1
-      ],
-      "negative": [
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "40": {
+    "inputs": {
+      "text": "cartoon, anime, cgi, deformed anatomy, extra limbs, bad hands, plastic skin, low quality, blurry, watermark, text, unrealistic proportions,sleevless",
+      "clip": [
+        "4",
+        1
+      ]
+    },
+    "class_type": "CLIPTextEncode",
+    "_meta": {
+      "title": "CLIP Text Encode (Prompt)"
+    }
+  },
+  "60": {
+    "inputs": {
+      "weight": 0.8,
+      "start_at": 0,
+      "end_at": 1,
+      "instantid": [
         "11",
-        2
+        0
+      ],
+      "insightface": [
+        "38",
+        0
       ],
       "control_net": [
-        "8",
+        "16",
         0
       ],
       "image": [
-        "7",
+        "13",
+        0
+      ],
+      "model": [
+        "4",
+        0
+      ],
+      "positive": [
+        "39",
+        0
+      ],
+      "negative": [
+        "40",
+        0
+      ],
+      "image_kps": [
+        "67",
         0
       ]
     },
-    "class_type": "ControlNetApplyAdvanced",
+    "class_type": "ApplyInstantID",
     "_meta": {
-      "title": "Apply ControlNet"
+      "title": "Apply InstantID"
+    }
+  },
+  "67": {
+    "inputs": {
+      "image": "gk 2.png"
+    },
+    "class_type": "LoadImage",
+    "_meta": {
+      "title": "Load Image"
     }
   }
 }
