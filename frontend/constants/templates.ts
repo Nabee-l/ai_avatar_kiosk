@@ -1,7 +1,7 @@
 import templateData from "@/assets/templates.json";
 import type { Template } from "@/types";
 
-const API_BASE = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000";
+const API_BASE = (process.env.NEXT_PUBLIC_API_URL ?? "").replace(/\/$/, "");
 
 const VISUALS: Record<string, Pick<Template, "colors" | "accentColor" | "imageUrl">> = {
   trophy: {

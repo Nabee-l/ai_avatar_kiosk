@@ -18,7 +18,7 @@ npm install
 
 # 3. Configure environment
 cp .env.example .env.local
-# Edit .env.local — set NEXT_PUBLIC_DEMO_MODE=true for demo
+# Edit .env.local and set NEXT_PUBLIC_API_URL to your Render backend URL
 
 # 4. Start dev server
 npm run dev
@@ -69,9 +69,16 @@ vercel
 #   Build command:  npm run build     (auto-detected)
 #   Output dir:     .next             (auto-detected)
 
-# Set env var for demo mode
+# Set env vars for production
+vercel env add NEXT_PUBLIC_API_URL production
+# enter your Render URL, for example:
+# https://ai-event-kiosk-api.onrender.com
+
 vercel env add NEXT_PUBLIC_DEMO_MODE production
-# → enter: true
+# enter: false
+
+vercel env add NEXT_PUBLIC_APP_NAME production
+# enter: Magic Avatar AI Kiosk
 
 # Deploy to production
 vercel --prod
@@ -153,7 +160,7 @@ All three platforms support deploying a subdirectory:
 | Variable                | Default | Description                             |
 |-------------------------|---------|-----------------------------------------|
 | `NEXT_PUBLIC_DEMO_MODE` | `false` | Enable full demo mode (no backend needed)|
-| `NEXT_PUBLIC_API_URL`   | *(empty)*| Backend URL — leave empty to use built-in API routes |
+| `NEXT_PUBLIC_API_URL`   | *(empty)*| Render backend URL, for example `https://ai-event-kiosk-api.onrender.com` |
 | `NEXT_PUBLIC_APP_NAME`  | *(optional)* | App name for browser tab / PWA |
 
 ---
