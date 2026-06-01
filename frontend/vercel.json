@@ -4,6 +4,7 @@
   "outputDirectory": ".next",
   "build": {
     "env": {
+      "NEXT_PUBLIC_API_URL": "https://ai-event-kiosk-api.onrender.com",
       "NEXT_PUBLIC_DEMO_MODE": "false",
       "NEXT_PUBLIC_APP_NAME": "Magic Avatar AI Kiosk"
     }
